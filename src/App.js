@@ -1,4 +1,53 @@
-import { useState } from "react";
+import { useState, Fragment } from "react";
+
+function Formulario(){
+ 
+  return(
+    <Fragment>
+      <h2>Crear Cita</h2>
+
+      <form>
+        <label>Nombre Mascota</label>
+          <input 
+          type="text" 
+          name="mascota"
+          className="u-full-width" 
+          placeholder="Nombre Mascota" 
+          />
+
+          <label>Nombre Dueño</label>
+          <input 
+           type="text" 
+           name="propietario"
+           className="u-full-width"  
+           placeholder="Nombre Dueño de la Mascota" 
+          />
+
+          <label>Fecha</label>
+            <input 
+             type="date" 
+             className="u-full-width"
+             name="fecha"
+            />               
+
+            <label>Hora</label>
+             <input 
+              type="time" 
+              className="u-full-width"
+              name="hora" 
+             />
+
+              <label>Síntomas</label>
+              <textarea 
+              className="u-full-width"
+              name="sintomas"
+              ></textarea>
+
+              <button type="submit" className="button-primary u-full-width">Agregar</button>
+              </form>
+  </Fragment>
+  )
+}
 
 function App() {
 
@@ -8,7 +57,22 @@ function App() {
   const [citas, guardarCita] = useState([]);
 
   return(
-    <h1>Hola</h1>
+    <Fragment>
+      <h1> Administrador de Pacientes</h1>
+      <div className="container">
+        <div className="row">
+          <div className="one-half column">
+              <Formulario />
+          </div>
+          <div className="one-half column">
+
+          </div>
+
+
+        </div>
+      </div>
+
+    </Fragment>
   )
 }
 
