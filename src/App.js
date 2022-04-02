@@ -15,18 +15,22 @@ function Cita({cita}){
 }
 
 function Formulario({crearCita}){
+
+  const stateInicial = {
+    mascota: '',
+    propietario: '',
+    telefono: '',
+    fecha: '',
+    hora: '',
+    sintomas: '',
+  }
  
+  //cita = state actual
+  //actualizarCita = función para cambiar el state
   //el valor de inicio va a ser un objeto y se representa useState({})
-  const [cita, actualizarCita] = useState({
-      mascota: '',
-      propietario: '',
-      telefono: '',
-      fecha: '',
-      hora: '',
-      sintomas: '',
+  const [cita, actualizarCita] = useState(stateInicial);
 
-  });
-
+  //actualiza el state
   const actualizarState = (e) => {
     actualizarCita({
       ...cita,  //crear copia para no perder lo que no voy a modificar
@@ -44,6 +48,7 @@ function Formulario({crearCita}){
 
 
     //reiniciar el state (reiniciar el form)
+    actualizarCita(stateInicial)
 
   } 
   
@@ -60,6 +65,7 @@ function Formulario({crearCita}){
           className="u-full-width" 
           placeholder="Nombre Mascota" 
           onChange={actualizarState}
+          value={cita.mascota}
           />
 
           <label>Nombre Dueño</label>
@@ -69,6 +75,7 @@ function Formulario({crearCita}){
            className="u-full-width"  
            placeholder="Nombre Dueño de la Mascota" 
            onChange={actualizarState}
+           value={cita.propietario}
           />
 
           <label>Teléfono</label>
@@ -78,6 +85,7 @@ function Formulario({crearCita}){
            className="u-full-width"  
            placeholder="Teléfono de contacto" 
            onChange={actualizarState}
+           value={cita.telefono}
           />
 
           <label>Fecha</label>
@@ -86,6 +94,7 @@ function Formulario({crearCita}){
              className="u-full-width"
              name="fecha"
              onChange={actualizarState}
+             value={cita.fecha}
             />               
 
             <label>Hora</label>
@@ -94,6 +103,7 @@ function Formulario({crearCita}){
               className="u-full-width"
               name="hora" 
               onChange={actualizarState}
+              value={cita.hora}
              />
 
               <label>Síntomas</label>
@@ -101,6 +111,7 @@ function Formulario({crearCita}){
               className="u-full-width"
               name="sintomas"
               onChange={actualizarState}
+              value={cita.sintomas}
               ></textarea>
 
               <button type="submit" className="button-primary u-full-width">Agregar</button>
