@@ -1,4 +1,4 @@
-import { useState, Fragment } from "react";
+import { useState, useEffect, Fragment } from "react";
 
 function Cita({cita, index, eliminarCita}){
   return(
@@ -20,12 +20,14 @@ function Cita({cita, index, eliminarCita}){
 function Formulario({crearCita}){
 
   const stateInicial = {
+    
     mascota: '',
     propietario: '',
     telefono: '',
     fecha: '',
     hora: '',
     sintomas: '',
+  
   }
  
   //cita = state actual
@@ -126,10 +128,17 @@ function Formulario({crearCita}){
 
 function App() {
 
+  //cargar las citas de localStorage como state inicial
+  let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+
+     if(!citasIniciales){
+       citasIniciales = [];
+     }
+
   //useState retorna 2 funciones
   //1-El state actual = this.state
   //2-Función que actualiza el state this.setState()
-  const [citas, guardarCita] = useState([]);
+  const [citas, guardarCita] = useState(citasIniciales);
 
   //agregar las nuevas citas al state
   const crearCita = (cita) => {
@@ -149,6 +158,22 @@ function App() {
     guardarCita(nuevasCitas);
 
   }
+
+  //useEffect se carga cuando el componente se actualiza, detecta cambios y los guarda en localStorage
+  useEffect(
+    () => {
+     let citasIniciales = JSON.parse(localStorage.getItem('citas'));
+
+     if(citasIniciales){
+       localStorage.setItem('citas', JSON.stringify(citas));
+     }
+     else{
+        localStorage.setItem('citas', JSON.stringify([]));
+     }
+  }, [citas] //ejecutar useEffect solo cuando las citas cambien
+ )
+
+  
 
   // imprimir mensaje en base a si hay citas o no
   const mensaje = Object.keys(citas).length === 0 ? 'No hay citas' : 'Administra las citas aquí';
