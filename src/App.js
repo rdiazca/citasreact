@@ -2,6 +2,25 @@ import { useState, Fragment } from "react";
 
 function Formulario(){
  
+  //el valor de inicio va a ser un objeto y se representa useState({})
+  const [cita, actualizarCita] = useState({
+      mascota: '',
+      propietario: '',
+      fecha: '',
+      hora: '',
+      sintomas: '',
+
+  });
+
+  const actualizarState = (e) => {
+    actualizarCita({
+      ...cita,  //crear copia para no perder lo que no voy a modificar
+      [e.target.name] : e.target.value //asignar al string mascota del state el valor del input mascota
+    })
+
+  }
+  console.log(cita);
+
   return(
     <Fragment>
       <h2>Crear Cita</h2>
@@ -13,6 +32,7 @@ function Formulario(){
           name="mascota"
           className="u-full-width" 
           placeholder="Nombre Mascota" 
+          onChange={actualizarState}
           />
 
           <label>Nombre Dueño</label>
@@ -45,7 +65,7 @@ function Formulario(){
 
               <button type="submit" className="button-primary u-full-width">Agregar</button>
               </form>
-  </Fragment>
+     </Fragment>
   )
 }
 
