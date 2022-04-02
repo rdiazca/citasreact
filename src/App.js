@@ -1,11 +1,26 @@
 import { useState, Fragment } from "react";
 
+function Cita({cita}){
+  return(
+    <div className="cita">
+        <p>Mascota: <span>{cita.mascota}</span></p>
+        <p>Dueño: <span>{cita.propietario}</span></p>
+        <p>Teléfono: <span>{cita.telefono}</span></p>
+        <p>Fecha: <span>{cita.fecha}</span></p>
+        <p>Hora: <span>{cita.hora}</span></p>
+        <p>Síntomas: <span>{cita.sintomas}</span></p>
+
+    </div>
+  )
+}
+
 function Formulario({crearCita}){
  
   //el valor de inicio va a ser un objeto y se representa useState({})
   const [cita, actualizarCita] = useState({
       mascota: '',
       propietario: '',
+      telefono: '',
       fecha: '',
       hora: '',
       sintomas: '',
@@ -53,6 +68,15 @@ function Formulario({crearCita}){
            name="propietario"
            className="u-full-width"  
            placeholder="Nombre Dueño de la Mascota" 
+           onChange={actualizarState}
+          />
+
+          <label>Teléfono</label>
+          <input 
+           type="text" 
+           name="telefono"
+           className="u-full-width"  
+           placeholder="Teléfono de contacto" 
            onChange={actualizarState}
           />
 
@@ -114,6 +138,13 @@ function App() {
               />
           </div>
           <div className="one-half column">
+            {citas.map((cita, index) => (
+              <Cita
+                key = {index}
+                index = {index}
+                cita = {cita}
+              />
+            ))}
 
           </div>
 
