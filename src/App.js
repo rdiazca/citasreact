@@ -11,7 +11,7 @@ function Cita({cita, index, eliminarCita}){
         <p>Síntomas: <span>{cita.sintomas}</span></p>
         <button 
         onClick={() => eliminarCita(index)}
-        type="button" className="button eliminar u-full-width">Eliminar X</button>
+        type="button" className="button eliminar u-full-width">Eliminar</button>
 
     </div>
   )
@@ -44,14 +44,15 @@ function Formulario({crearCita}){
 
   const enviarCita = (e) => {
     e.preventDefault(); //se pone siempre que se hace un submit
-    console.log(cita);
 
+    if(cita.mascota !== '' && cita.propietario !== ''){
     //pasar la cita hacia el componente principal
     crearCita(cita)
 
 
     //reiniciar el state (reiniciar el form)
     actualizarCita(stateInicial)
+  }
 
   } 
   
@@ -149,6 +150,9 @@ function App() {
 
   }
 
+  // imprimir mensaje en base a si hay citas o no
+  const mensaje = Object.keys(citas).length === 0 ? 'No hay citas' : 'Administra las citas aquí';
+
   return(
     <Fragment>
       <h1> Administrador de Pacientes</h1>
@@ -160,6 +164,7 @@ function App() {
               />
           </div>
           <div className="one-half column">
+            <h2>{mensaje}</h2>
             {citas.map((cita, index) => (
               <Cita
                 key = {index}
