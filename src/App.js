@@ -35,6 +35,9 @@ function Formulario({crearCita}){
   //el valor de inicio va a ser un objeto y se representa useState({})
   const [cita, actualizarCita] = useState(stateInicial);
 
+  //state para mostrar error si hay un campo vacío
+  const [error, setError] = useState(false);
+
   //actualiza el state
   const actualizarState = (e) => {
     actualizarCita({
@@ -47,13 +50,17 @@ function Formulario({crearCita}){
   const enviarCita = (e) => {
     e.preventDefault(); //se pone siempre que se hace un submit
 
-    if(cita.mascota !== '' && cita.propietario !== ''){
+    if(cita.mascota === '' || cita.propietario === '' || cita.telefono === '' || cita.fecha ==='' || cita.hora === '' || cita.sintomas === ''){
+    setError(true)
+  }
+  else {
     //pasar la cita hacia el componente principal
     crearCita(cita)
 
 
     //reiniciar el state (reiniciar el form)
     actualizarCita(stateInicial)
+    setError(false)
   }
 
   } 
@@ -63,6 +70,7 @@ function Formulario({crearCita}){
     <Fragment>
       <h2>Crear Cita</h2>
 
+      { error ? <div className='alert alert-danger' role='alert'>Todos los campos son obligatorios</div> : null}
       <form onSubmit={enviarCita}>
         <label>Nombre Mascota</label>
           <input 
