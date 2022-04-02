@@ -1,6 +1,6 @@
 import { useState, Fragment } from "react";
 
-function Formulario(){
+function Formulario({crearCita}){
  
   //el valor de inicio va a ser un objeto y se representa useState({})
   const [cita, actualizarCita] = useState({
@@ -15,17 +15,29 @@ function Formulario(){
   const actualizarState = (e) => {
     actualizarCita({
       ...cita,  //crear copia para no perder lo que no voy a modificar
-      [e.target.name] : e.target.value //asignar al string mascota del state el valor del input mascota
+      [e.target.name] : e.target.value //asignar al string mascota, propietario etc del state el valor del input mascota propietario etc
     })
 
   }
-  console.log(cita);
+
+  const enviarCita = (e) => {
+    e.preventDefault(); //se pone siempre que se hace un submit
+    console.log(cita);
+
+    //pasar la cita hacia el componente principal
+    crearCita(cita)
+
+
+    //reiniciar el state (reiniciar el form)
+
+  } 
+  
 
   return(
     <Fragment>
       <h2>Crear Cita</h2>
 
-      <form>
+      <form onSubmit={enviarCita}>
         <label>Nombre Mascota</label>
           <input 
           type="text" 
@@ -80,13 +92,26 @@ function App() {
   //2-Función que actualiza el state this.setState()
   const [citas, guardarCita] = useState([]);
 
+  //agregar las nuevas citas al state
+  const crearCita = (cita) => {
+
+    //tomar una copia del state y agregar el nuevo cliente
+    const nuevasCitas =  [...citas, cita];
+
+    //almacenar en el state
+    guardarCita(nuevasCitas);
+
+  }
+
   return(
     <Fragment>
       <h1> Administrador de Pacientes</h1>
       <div className="container">
         <div className="row">
           <div className="one-half column">
-              <Formulario />
+              <Formulario
+                crearCita={crearCita}
+              />
           </div>
           <div className="one-half column">
 
